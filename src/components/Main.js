@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CityForm from './CityForm';
 import Results from './Results';
+import ErrorMessage from './ErrorMessage';
 import axios from 'axios';
 
 
@@ -11,7 +12,13 @@ export class Main extends Component {
             cityName: '',
             cityData: {},
             showData: false,
+            show: true,
         }
+    }
+    setShow = () => {
+        this.setState({
+            show: false,
+        })
     }
 
     setCityName = (e) => {
@@ -24,15 +31,20 @@ export class Main extends Component {
 
     getCityData = async (e) => {
         e.preventDefault();
-        const responseData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.359b8966c3600adbf20970aa12a8f363&city=${this.state.cityName}&format=json`);
-        console.log(responseData);
-        this.setState({
-            cityData: responseData.data[0],
-            showData: true,
-        });
-        console.log(this.state.cityData);
+        try {
+            const responseData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.359b8966c3600adbf20970aa12a8f363&city=${this.state.cityName}&format=json`);
+            console.log(responseData);
+            this.setState({
+                cityData: responseData.data[0],
+                showData: true,
+            });
+            console.log(this.state.cityData);    
+        } catch (error) {
+            alert(error);
+        }
+        
     }
-    render() {
+    render(){
         return (
             <div>
                 <CityForm setCityName={this.setCityName} getCityData={this.getCityData} />
