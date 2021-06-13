@@ -10,7 +10,7 @@ export class Main extends Component {
         this.state={
             cityName: '',
             cityData: {},
-            showData: false
+            showData: false,
         }
     }
 
@@ -28,7 +28,7 @@ export class Main extends Component {
         console.log(responseData);
         this.setState({
             cityData: responseData.data[0],
-            showData: true
+            showData: true,
         });
         console.log(this.state.cityData);
     }
