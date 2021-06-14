@@ -13,6 +13,8 @@ export class Main extends Component {
             cityData: {},
             showData: false,
             show: true,
+            showError: false,
+            errorMessage: {},
         }
     }
     setShow = () => {
@@ -40,13 +42,25 @@ export class Main extends Component {
             });
             console.log(this.state.cityData);    
         } catch (error) {
-            alert(error);
+            this.setState({
+                showError: true,
+                errorMessage: error.message,
+            });
+
         }
         
     }
+
+    setShowError = () => {
+        this.setState({
+            showError: false
+        })
+    }
+
     render(){
         return (
             <div>
+                <ErrorMessage setShowError= {this.setShowError} showError={this.state.showError} errorMessage={this.state.errorMessage} />
                 <CityForm setCityName={this.setCityName} getCityData={this.getCityData} />
                 {
                     this.state.showData &&
