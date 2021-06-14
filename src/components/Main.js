@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CityForm from './CityForm';
 import Results from './Results';
+import WeatherForecast from './WeatherForecast';
 import ErrorMessage from './ErrorMessage';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ export class Main extends Component {
             show: true,
             showError: false,
             errorMessage: {},
+            weather: [],
         }
     }
     setShow = () => {
@@ -28,20 +30,19 @@ export class Main extends Component {
         this.setState({
             cityName: e.target.value
         })
-        console.log(this.state.cityName);
     }
 
     getCityData = async (e) => {
         e.preventDefault();
         try {
             const responseData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.359b8966c3600adbf20970aa12a8f363&city=${this.state.cityName}&format=json`);
-            console.log(responseData);
+            const WeatherData = await axios.get(`${process.env.REACT_APP_URL}/weather`)
             this.setState({
                 cityData: responseData.data[0],
                 showData: true,
                 showError: false,
-            });
-            console.log(this.state.cityData);    
+                weather: WeatherData.data
+            });   
         } catch (error) {
             this.setState({
                 showError: true,
@@ -67,6 +68,9 @@ export class Main extends Component {
                 {
                     this.state.showData &&
                     <Results cityData={this.state.cityData} />
+                }
+                {
+                    this.state.weather.map(item => <WeatherForecast date={item.date} description={item.description} />)
                 }
             </div>
         )
