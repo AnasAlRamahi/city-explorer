@@ -39,6 +39,7 @@ export class Main extends Component {
             this.setState({
                 cityData: responseData.data[0],
                 showData: true,
+                showError: false,
             });
             console.log(this.state.cityData);    
         } catch (error) {
@@ -50,6 +51,7 @@ export class Main extends Component {
         }
         
     }
+    
 
     setShowError = () => {
         this.setState({
