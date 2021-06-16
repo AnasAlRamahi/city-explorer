@@ -13,6 +13,7 @@ export class WeatherForecast extends Component {
                     </ListGroup.Item>
                     }
                 </ListGroup>
+                <br />
             </div>
         )
     }
