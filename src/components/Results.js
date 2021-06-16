@@ -20,6 +20,7 @@ export class Results extends Component {
                         </ListGroup>
                     </Card>
                 </Container>
+                <br />
             </div>
         )
     }
