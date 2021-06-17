@@ -15,7 +15,7 @@ export class Movies extends Component {
                         <Card.Img variant="top" src={this.props.image_url} />
                         <Card.Body>
                             <Card.Title>{this.props.title}</Card.Title>
-                            <Card.Text>
+                            <Card.Text style={{ height: '100px', overflowY: 'scroll', border: '1px black solid' }}>
                                 {this.props.overview}
                             </Card.Text>
                         </Card.Body>
