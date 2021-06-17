@@ -18,7 +18,9 @@ export class Main extends Component {
             showError: false,
             errorMessage: {},
             weather: [],
-            movies: []
+            showWeather: false,
+            movies: [],
+            showMovies: false,
         }
     }
     setShow = () => {
@@ -51,7 +53,8 @@ export class Main extends Component {
             });
             await axios.get(`${process.env.REACT_APP_URL}/weather?lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`).then(response => {
                 this.setState({
-                    weather: response.data
+                    weather: response.data,
+                    showWeather: true,
                 });
             }).catch(error => {
                 this.setState({
@@ -61,7 +64,8 @@ export class Main extends Component {
             }); 
             await axios.get(`${process.env.REACT_APP_URL}/movies?city=${this.state.cityName}`).then(response => {
                 this.setState({
-                    movies: response.data
+                    movies: response.data,
+                    showMovies: true,
                 });
             }).catch(error => {
                 this.setState({
@@ -89,8 +93,18 @@ export class Main extends Component {
                     this.state.showData &&
                     <Results cityData={this.state.cityData} />
                 }
+                <br />
+                    {
+                     this.state.showWeather &&
+                     <h2>Weather forecast for the next 16 days in {this.state.cityName}</h2>    
+                    }
                 {
                     this.state.weather.map(item => <WeatherForecast date={item.date} description={item.description} />)
+                }
+                <br />
+                {
+                    this.state.showMovies &&
+                    <h2>Movies including the name: {this.state.cityName}</h2> 
                 }
                 {
                     this.state.movies.map(item =>
